@@ -1,11 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 
-import { IAppListProps } from "../components/appList";
 import { IBookmarkListProps } from "../components/bookmarks";
-import { ISearchProps } from "../components/searchBar";
-import { IThemeDataProps } from "./useTheme";
-import { IImprintProps } from "../components/imprint";
-import { IGreeterDataProps } from "../components/greeter";
 
 export interface IDataProps<I> {
   response?: I;
@@ -36,12 +31,12 @@ const fetchFile = (f: string) => {
 };
 
 interface IFetchProps {
-  appData: IDataProps<IAppListProps>;
+  // appData: IDataProps<IAppListProps>;
   bookmarkData: IDataProps<IBookmarkListProps>;
-  searchData: IDataProps<ISearchProps>;
-  themeData: IDataProps<IThemeDataProps>;
-  imprintData: IDataProps<IImprintProps>;
-  greeterData: IDataProps<IGreeterDataProps>;
+  // searchData: IDataProps<ISearchProps>;
+  // themeData: IDataProps<IThemeDataProps>;
+  // imprintData: IDataProps<IImprintProps>;
+  // greeterData: IDataProps<IGreeterDataProps>;
   callback?: () => void;
 }
 
@@ -51,38 +46,19 @@ interface IFetchProps {
 export const useFetcher = (): IFetchProps => {
   const defaults: IDataProps<any> = { error: true };
 
-  const [appData, setAppData] = useState<IDataProps<IAppListProps>>(defaults);
   const [bookmarkData, setBookmarkData] =
     useState<IDataProps<IBookmarkListProps>>(defaults);
-  const [searchData, setSearchData] =
-    useState<IDataProps<ISearchProps>>(defaults);
-  const [themeData, setThemeData] =
-    useState<IDataProps<IThemeDataProps>>(defaults);
-  const [imprintData, setImprintData] =
-    useState<IDataProps<IImprintProps>>(defaults);
-  const [greeterData, setGreeterData] =
-    useState<IDataProps<IGreeterDataProps>>(defaults);
 
   const callback = useCallback(() => {
     const files = [
-      "apps",
       "bookmarks",
-      "search",
-      "themes",
-      "imprint",
-      "greeter",
     ];
 
     Promise.all(files.map((f) => fetchFile(f))).then(
-      ([apps, bookmarks, search, themes, imprint, greeter]: any) => {
-        setAppData({ response: apps });
+      ([bookmarks]: any) => {
         setBookmarkData({
           response: bookmarks,
         });
-        setSearchData({ response: search });
-        setThemeData({ response: themes });
-        setImprintData({ response: imprint });
-        setGreeterData({ response: greeter });
       },
     );
   }, []);
@@ -90,12 +66,7 @@ export const useFetcher = (): IFetchProps => {
   useEffect(() => callback(), [callback]);
 
   return {
-    appData,
     bookmarkData,
-    searchData,
-    themeData,
-    imprintData,
-    greeterData,
   };
 };
 
