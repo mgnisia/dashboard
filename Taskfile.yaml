@@ -2,7 +2,10 @@
 
 version: '3'
 tasks:
-  default:
+  build:
     cmds:
-      - echo "{{.GREETING}}"
-    silent: true
+      - docker build -t dashboard:latest .
+  push:
+    cmds:
+      - docker tag dashboard:latest mgnisia/dashboard:latest
+      - docker push mgnisia/dashboard:latest
