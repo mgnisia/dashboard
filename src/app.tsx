@@ -31,12 +31,12 @@ export const GlobalStyle = createGlobalStyle<{ theme: IThemeProps }>`
  */
 const App = () => {
   const {
-    appData,
+    // appData,
     bookmarkData,
-    searchData,
-    themeData,
-    imprintData,
-    greeterData,
+    // searchData,
+    // themeData,
+    // imprintData,
+    // greeterData,
   } = useFetch();
 
   const theme = getTheme();
@@ -47,15 +47,7 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <GlobalStyle />
       <div>
-        <SearchBar search={searchData.response} />
-        <Settings themes={themeData.response} search={searchData.response} />
-        <Greeter greeter={greeterData.response} />
-        <AppList
-          apps={appData.response?.apps}
-          categories={appData.response?.categories}
-        />
         <BookmarkList groups={bookmarkData.response?.groups} />
-        <Imprint imprint={imprintData.response} />
       </div>
     </ThemeProvider>
   );
